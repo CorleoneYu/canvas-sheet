@@ -6,6 +6,7 @@ import CellManager from './CellManager';
 import RowManager from './RowManager';
 import ColManager from './ColManager';
 import TableManager from './TableManager';
+import Manager from './Manager';
 
 export {
   Cell,
@@ -16,4 +17,5 @@ export {
   ColManager,
   TableManager,
   RowManager,
+  Manager,
 };

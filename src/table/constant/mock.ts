@@ -5,6 +5,7 @@ function createTable() {
   const table = tableManager.createTable();
   table.colIds = createCols(5);
   table.rowIds = createRows(4, table.colIds);
+  return table;
 }
 
 function createCols(count: number) {
@@ -31,7 +32,7 @@ function createCells(rowId: string, colIds: string[]) {
     const cell = cellManager.createCell({
       colId,
       rowId,
-      data: `c-${index}`,
+      data: `cell-${index}`,
     });
     return cell.cellId;
   });

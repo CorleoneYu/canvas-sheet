@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import Table from '../table';
+import Table from '../../table';
 import Card from '../card';
 
 const Router = () => {
