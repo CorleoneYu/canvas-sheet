@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row } from '../../models';
+import { Row } from '../../../models';
 import manager from '../../constant/manager';
 import Header from './Header';
 import CellComp from '../cell';

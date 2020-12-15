@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Table } from '../../models';
-import manager from '../../constant/manager';
+import { Table } from '../../../models';
 import tableData from '../../constant/mock';
 import RowComp from '../row';
 import ColComp from '../col';
@@ -9,8 +8,8 @@ import { TableBox } from './style';
 
 const TableComp = () => {
     const [table] = useState<Table>(tableData);
-    const rows = manager.getRows(table.rowIds);
-    const cols = manager.getCols(table.colIds);
+    const rows = table.rows;
+    const cols = table.cols;
 
     return <TableBox>
         <div className="table-header">

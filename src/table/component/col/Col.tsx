@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col } from '../../models';
+import { Col } from '../../../models';
 import { ColBox } from './style';
 
 interface IProps {

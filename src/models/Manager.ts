@@ -1,16 +1,18 @@
-import Cell from './Cell';
-import Row from './Row';
-import Col from './Col';
-import CellManager from './CellManager';
-import RowManager from './RowManager';
-import ColManager from './ColManager';
-import TableManager from './TableManager';
+import Cell from './cell/Cell';
+import Row from './row/Row';
+import Col from './col/Col';
+import CellManager from './cell/CellManager';
+import RowManager from './row/RowManager';
+import ColManager from './col/ColManager';
+import TableManager from './table/TableManager';
 
 class Manager {
     public cellManager = new CellManager();
     public rowManager = new RowManager();
     public colManager = new ColManager();
-    public tableManager = new TableManager();
+    public tableManager = new TableManager({
+        manager: this,
+    });
 
     public getCells = (cellIds: string[]): Cell[] => {
         return cellIds.reduce((acc: Cell[], cellId: string) => {

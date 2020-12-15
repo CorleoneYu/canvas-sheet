@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row } from '../../models';
+import { Row } from '../../../models';
 import { RowHeader } from './style';
 
 interface IProps {
