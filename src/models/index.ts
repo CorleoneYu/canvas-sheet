@@ -7,6 +7,7 @@ import RowManager from './row/RowManager';
 import ColManager from './col/ColManager';
 import TableManager from './table/TableManager';
 import Manager from './Manager';
+import Selection from './selection';
 
 export {
   Cell,
@@ -18,4 +19,5 @@ export {
   TableManager,
   RowManager,
   Manager,
+  Selection,
 };

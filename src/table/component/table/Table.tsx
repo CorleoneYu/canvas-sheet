@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Table } from '../../../models';
+import { Table, Selection } from '../../../models';
 import tableData from '../../constant/mock';
+import selectionData from '../../constant/selection';
 import RowComp from '../row';
 import ColComp from '../col';
 
@@ -8,6 +9,8 @@ import { TableBox } from './style';
 
 const TableComp = () => {
     const [table] = useState<Table>(tableData);
+    const [selection] = useState<Selection>(selectionData);
+
     const rows = table.rows;
     const cols = table.cols;
 
