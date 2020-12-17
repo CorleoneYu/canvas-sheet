@@ -1,2 +1,2 @@
-import Table from './component/table';
-export default Table;
+import TableList from './component/table-list';
+export default TableList;

@@ -1,16 +1,16 @@
 import React from 'react';
-import { Col } from '../../../models';
+import { ICol } from '../../models/useCol';
 import { ColBox } from './style';
 
 interface IProps {
-    col: Col;
+    col: ICol;
 }
 
 const ColComp = (props: IProps) => {
     const { col } = props;
 
     return <ColBox>
-       {col.colId}
+        {col.type}: {col.name}
     </ColBox>
 };
 

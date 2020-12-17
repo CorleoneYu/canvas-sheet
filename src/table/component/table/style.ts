@@ -1,9 +1,18 @@
 import styled from "styled-components";
-import { defaultRowHeaderWidth } from '../../constant/style';
+import { defaultRowHeaderWidth, defaultCellHeight } from '../../constant/style';
 
 export const TableBox = styled.div`
+    .table-operate {
+        .table-btn {
+            margin-right: 20px;
+        }
+    }
+
     .table-header {
-        margin-left: ${defaultRowHeaderWidth};
         display: flex;
+        margin-top: 20px;
+        margin-left: ${defaultRowHeaderWidth};
+        line-height: ${defaultCellHeight};
+        height: ${defaultCellHeight};
     }
 `;
