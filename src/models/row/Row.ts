@@ -13,10 +13,6 @@ class Row {
         this.rowId = `r-${rowIdx++}`;
         this.colIds = colIds;
     }
-
-    public get cellIds() {
-        return this.colIds.map((colId) => `${this.rowId}_${colId}`);
-    }
 }
 
 export default Row;
