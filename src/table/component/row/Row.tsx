@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { IRow } from '../../models/useRow';
 import useCellModel, { getCellId } from '../../models/useCell';
 import Header from './Header';
@@ -13,7 +13,9 @@ interface IProps {
 const RowComp = (props: IProps) => {
     const { row, index } = props;
     const { getCellsByRowId } = useCellModel();
-    const cells = getCellsByRowId(row.rowId);
+    const cells = useMemo(() => {
+        return getCellsByRowId(row.rowId);
+    }, [getCellsByRowId, row.rowId]);
 
     return (
         <RowBox>

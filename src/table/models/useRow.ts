@@ -31,44 +31,46 @@ function useRow() {
         [rowsMap],
     );
 
-    const createRow = useCallback((colIds: string[]) => {
-        const row = {
-            rowId: `row-${rowIdx++}`,
-            colIds: colIds,
-        };
+    const createRow = useCallback(
+        (colIds: string[]) => {
+            const row = {
+                rowId: `row-${rowIdx++}`,
+                colIds: [...colIds],
+            };
 
-        // 创建对应的 cell
-        colIds.forEach(colId => {
+            // 创建对应的 cell
+            colIds.forEach((colId) => {
+                createCell(row.rowId, colId);
+            });
+
+            setRows((preRows) => [...preRows, row]);
+            return row.rowId;
+        },
+        [createCell],
+    );
+
+    const rowInsertCol = useCallback(
+        (rowId: string, colId: string) => {
+            const row = rowsMap.get(rowId);
+            if (!row) {
+                return;
+            }
+
+            // 创建对应的 cell
             createCell(row.rowId, colId);
-        });
-        
-        // 更新 rows
-        const newRows = [...rows, row];
-        setRows(newRows);
-        return row.rowId;
-    }, [rows, setRows, createCell]);
 
-    const insertCol = useCallback((rowId: string, colId: string) => {
-        const row = rowsMap.get(rowId);
-        if (!row) {
-            return;
-        }
-
-        console.log('row -> insertCol');
-        // 创建对应的 cell
-        createCell(row.rowId, colId);
-
-        // 更新 colIds
-        row.colIds.push(colId);
-        setRows([...rows]);
-    }, [rowsMap, rows, createCell]);
+            row.colIds.push(colId);
+            setRows((preRows) => [...preRows]);
+        },
+        [rowsMap, createCell],
+    );
 
     return {
         rows,
         getRows,
         rowsMap,
         createRow,
-        insertCol,
+        rowInsertCol,
     };
 }
 

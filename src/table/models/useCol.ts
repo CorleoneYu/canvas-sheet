@@ -33,20 +33,17 @@ function useCol() {
         [colsMap],
     );
 
-    const createCol = useCallback(
-        (type: ColType = ColType.text, name?: string) => {
-            const colName = name ? name : `未命名列-${colIdx}`;
-            const col = {
-                type,
-                name: colName,
-                colId: `col-${colIdx++}`,
-            };
-            const newCols = [...cols, col];
-            setCols(newCols);
-            return col.colId;
-        },
-        [setCols, cols],
-    );
+    const createCol = useCallback((type: ColType = ColType.text, name?: string) => {
+        const colName = name ? name : `未命名列-${colIdx}`;
+        const col = {
+            type,
+            name: colName,
+            colId: `col-${colIdx++}`,
+        };
+
+        setCols((preCols) => [...preCols, col]);
+        return col.colId;
+    }, []);
 
     return {
         cols,
