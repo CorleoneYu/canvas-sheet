@@ -2,6 +2,7 @@ import { useCallback, useState, useMemo } from 'react';
 import { createModel } from 'hox';
 import useRowModel from './useRow';
 import useColModel from './useCol';
+import { INIT_COUNT, defaultTables } from '../constant/mock';
 
 export interface ITable {
     tableId: string;
@@ -9,10 +10,10 @@ export interface ITable {
     colIds: string[];
 }
 
-let tableIdx = 1;
+let tableIdx = INIT_COUNT.table + 1;
 
 function useTable() {
-    const [tables, setTables] = useState<ITable[]>([]);
+    const [tables, setTables] = useState<ITable[]>(defaultTables);
     const { createRow, getRows, rowInsertCol } = useRowModel();
     const { createCol } = useColModel();
 

@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import { defaultRowHeaderWidth, defaultCellHeight } from '../../constant/style';
 
 export const TableBox = styled.div`
+    user-select: none;
     .table-operate {
         .table-btn {
             margin-right: 20px;

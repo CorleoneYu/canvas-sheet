@@ -6,12 +6,13 @@ import CellComp from '../cell';
 import { RowBox } from './style';
 
 interface IProps {
+    isLastRow: boolean;
     index: number;
     row: IRow;
 }
 
 const RowComp = (props: IProps) => {
-    const { row, index } = props;
+    const { row, index, isLastRow } = props;
     const { getCellsByRowId } = useCellModel();
     const cells = useMemo(() => {
         return getCellsByRowId(row.rowId);
@@ -22,7 +23,7 @@ const RowComp = (props: IProps) => {
             <Header index={index} row={row} />
             <div className="cell-list">
                 {cells.map((cell) => (
-                    <CellComp key={getCellId(cell)} cell={cell} />
+                    <CellComp key={getCellId(cell)} cell={cell} isLastRow={isLastRow} />
                 ))}
             </div>
         </RowBox>

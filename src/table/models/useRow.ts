@@ -1,16 +1,17 @@
 import { useCallback, useState, useMemo } from 'react';
-import useCellModel from './useCell';
 import { createModel } from 'hox';
+import useCellModel from './useCell';
+import { INIT_COUNT, defaultRows } from '../constant/mock';
 
 export interface IRow {
     rowId: string;
     colIds: string[];
 }
 
-let rowIdx = 1;
+let rowIdx = INIT_COUNT.row + 1;
 
 function useRow() {
-    const [rows, setRows] = useState<IRow[]>([]);
+    const [rows, setRows] = useState<IRow[]>(defaultRows);
     const { createCell } = useCellModel();
     const rowsMap = useMemo(() => {
         const map: Map<string, IRow> = new Map();

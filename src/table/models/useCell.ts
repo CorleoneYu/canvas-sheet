@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { createModel } from 'hox';
+import { defaultCells } from '../constant/mock';
 
 export interface ICell {
     rowId: string;
@@ -12,7 +13,7 @@ export const getCellId = (cell: ICell) => {
 };
 
 function useCell() {
-    const [cells, setCells] = useState<ICell[]>([]);
+    const [cells, setCells] = useState<ICell[]>(defaultCells);
 
     const cellsMap = useMemo(() => {
         const map: Map<string, ICell> = new Map();

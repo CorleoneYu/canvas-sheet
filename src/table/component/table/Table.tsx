@@ -31,14 +31,22 @@ const TableComp = (props: ITableProps) => {
         <TableBox>
             <h2>id: {table.tableId}</h2>
             <div className="table-operate">
-                <button className="table-btn" onClick={handleInsertRow}>添加行</button>
-                <button className="table-btn" onClick={handleInsertCol}>添加列</button>
+                <button className="table-btn" onClick={handleInsertRow}>
+                    添加行
+                </button>
+                <button className="table-btn" onClick={handleInsertCol}>
+                    添加列
+                </button>
             </div>
             <div className="table-header">
-                {cols.map(col => <ColComp key={col.colId} col={col} />)}
+                {cols.map((col) => (
+                    <ColComp key={col.colId} col={col} />
+                ))}
             </div>
             <div className="table-body">
-                {rows.map((row, index) => <RowComp key={row.rowId} index={index} row={row} />)}
+                {rows.map((row, index) => (
+                    <RowComp key={row.rowId} index={index} row={row} isLastRow={index === rows.length - 1} />
+                ))}
             </div>
         </TableBox>
     );

@@ -1,5 +1,9 @@
-import styled from "styled-components";
-import { defaultCellWidth, defaultCellHeight } from '../../constant/style';
+import styled from 'styled-components';
+import { defaultCellWidth, defaultCellHeight, gray } from '../../constant/style';
+
+interface ICellBoxProps {
+    isLastRow: boolean;
+}
 
 export const CellBox = styled.div`
     box-sizing: border-box;
@@ -8,7 +12,13 @@ export const CellBox = styled.div`
     line-height: ${defaultCellHeight};
     text-align: center;
 
-    :hover {
-        border: 1px solid #eee;
-    }
+    border-top: 1px solid ${gray};
+    border-bottom: ${(props: ICellBoxProps) => {
+        if (!props.isLastRow) {
+            return 'none';
+        }
+        return `1px solid ${gray};`;
+    }};
+
+    cursor: pointer;
 `;
