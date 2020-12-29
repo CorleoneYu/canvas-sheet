@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
-import RowComp from '../row';
 import ColComp from '../col';
+import RowList from '../row';
 import useTableModel, { ITable } from '../../models/useTable';
 import useColModel from '../../models/useCol';
 import useRowModel from '../../models/useRow';
+import useSelectionModel from '../../models/useSelection';
 import { TableBox } from './style';
 
 interface ITableProps {
@@ -15,7 +16,7 @@ const TableComp = (props: ITableProps) => {
     const { insertRow, insertCol } = useTableModel();
     const { getCols } = useColModel();
     const { getRows } = useRowModel();
-
+    const { setPosition, selection } = useSelectionModel();
     const rows = getRows(table.rowIds);
     const cols = getCols(table.colIds);
 
@@ -27,8 +28,30 @@ const TableComp = (props: ITableProps) => {
         insertCol(table.tableId);
     }, [table, insertCol]);
 
+    const handleClick = useCallback(
+        (event: React.MouseEvent) => {
+            const target: Element = event.target as Element;
+            const rowIdx = parseInt(target.getAttribute('data-row-idx') || '');
+            const colIdx = parseInt(target.getAttribute('data-col-idx') || '');
+            console.log('handleClick', rowIdx, colIdx);
+            if (isNaN(rowIdx) || isNaN(colIdx)) {
+                setPosition({
+                    colIdx: -1,
+                    rowIdx: -1,
+                });
+                return;
+            }
+
+            setPosition({
+                colIdx,
+                rowIdx,
+            });
+        },
+        [setPosition],
+    );
+
     return (
-        <TableBox>
+        <TableBox onClick={handleClick}>
             <h2>id: {table.tableId}</h2>
             <div className="table-operate">
                 <button className="table-btn" onClick={handleInsertRow}>
@@ -44,9 +67,12 @@ const TableComp = (props: ITableProps) => {
                 ))}
             </div>
             <div className="table-body">
-                {rows.map((row, index) => (
-                    <RowComp key={row.rowId} index={index} row={row} isLastRow={index === rows.length - 1} />
-                ))}
+                <RowList rows={rows} />
+            </div>
+            <div className="table-footer">
+                <p>
+                    activeCell - row: {selection.position.rowIdx} col: {selection.position.colIdx}
+                </p>
             </div>
         </TableBox>
     );

@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const Header = (props: IProps) => {
-    const { row, index } = props;
+    const { index } = props;
     return <RowHeader>{index + 1}</RowHeader>;
 };
 

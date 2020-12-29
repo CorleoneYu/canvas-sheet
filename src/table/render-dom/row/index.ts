@@ -1,2 +1,2 @@
-import Row from './Row';
-export default Row;
+import RowList from './RowList';
+export default RowList;

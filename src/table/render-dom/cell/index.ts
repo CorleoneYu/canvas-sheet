@@ -1,2 +1,2 @@
-import Cell from './Cell';
-export default Cell;
+import CellList from './CellList';
+export default CellList;

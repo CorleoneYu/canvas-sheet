@@ -1,18 +1,18 @@
 import React, { useMemo } from 'react';
 import { IRow } from '../../models/useRow';
-import useCellModel, { getCellId } from '../../models/useCell';
+import useCellModel from '../../models/useCell';
 import Header from './Header';
-import CellComp from '../cell';
+import CellList from '../cell';
 import { RowBox } from './style';
 
 interface IProps {
-    isLastRow: boolean;
+    rowCount: number; // 总共行数
     index: number;
     row: IRow;
 }
 
 const RowComp = (props: IProps) => {
-    const { row, index, isLastRow } = props;
+    const { row, index, rowCount } = props;
     const { getCellsByRowId } = useCellModel();
     const cells = useMemo(() => {
         return getCellsByRowId(row.rowId);
@@ -21,11 +21,7 @@ const RowComp = (props: IProps) => {
     return (
         <RowBox>
             <Header index={index} row={row} />
-            <div className="cell-list">
-                {cells.map((cell) => (
-                    <CellComp key={getCellId(cell)} cell={cell} isLastRow={isLastRow} />
-                ))}
-            </div>
+            <CellList cells={cells} rowCount={rowCount} rowIdx={index} />
         </RowBox>
     );
 };

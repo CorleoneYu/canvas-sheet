@@ -1,2 +1,2 @@
-import TableList from './table-list';
+import TableList from './container';
 export default TableList;

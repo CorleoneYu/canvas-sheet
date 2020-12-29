@@ -1,2 +1,2 @@
-import Table from './Table';
-export default Table;
+import TableList from './TableList';
+export default TableList;

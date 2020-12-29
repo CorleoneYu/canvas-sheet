@@ -1,9 +1,9 @@
 import React from 'react';
-import TableComp from '../table';
+import TableList from '../table';
 import useTableModel from '../../models/useTable';
 import { TableListBox } from './style';
 
-const TableList = () => {
+const Container = () => {
     const { tables, createTable } = useTableModel();
 
     return (
@@ -11,13 +11,9 @@ const TableList = () => {
             <div className="table-operate">
                 <button onClick={createTable}>添加表格</button>
             </div>
-            <div className="table-list">
-                {tables.map((table) => (
-                    <TableComp table={table} key={table.tableId} />
-                ))}
-            </div>
+            <TableList tables={tables} />
         </TableListBox>
     );
 };
 
-export default TableList;
+export default Container;
