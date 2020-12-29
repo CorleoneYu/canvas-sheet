@@ -2,13 +2,13 @@ import { useCallback, useState } from 'react';
 import { createModel } from 'hox';
 
 // 单点
-interface IPosition {
+export interface IPosition {
     rowIdx: number;
     colIdx: number;
 }
 
 // 范围
-interface IRange {
+export interface IRange {
     startRowIdx: number;
     endRowIdx: number;
     startColIdx: number;
@@ -16,16 +16,21 @@ interface IRange {
 }
 
 // 选区
-interface ISelection {
-    position: IPosition;
+export interface ISelection {
+    position: IPosition | null;
     ranges: IRange[];
 }
 
-export function isCellActive(selection: ISelection, rowIdx: number, colIdx: number) {
+export function isSamePos(posA: IPosition, posB: IPosition) {
+    return posA.rowIdx === posB.rowIdx && posA.colIdx === posB.colIdx;
+}
+
+export function isCellActive(selection: ISelection, pos: IPosition) {
     if (!selection.position) {
         return false;
     }
 
+    const { colIdx, rowIdx } = pos;
     if (selection.position.colIdx !== colIdx || selection.position.rowIdx !== rowIdx) {
         return false;
     }
@@ -34,17 +39,14 @@ export function isCellActive(selection: ISelection, rowIdx: number, colIdx: numb
 }
 
 const defaultSelection: ISelection = {
-    position: {
-        rowIdx: -1,
-        colIdx: -1,
-    },
+    position: null,
     ranges: [],
 };
 
 function useSelection() {
     const [selection, setSelection] = useState<ISelection>(defaultSelection);
 
-    const setPosition = useCallback((position: IPosition) => {
+    const setSelectPosition = useCallback((position: IPosition | null) => {
         setSelection((preSelection) => ({
             position,
             ranges: preSelection.ranges,
@@ -53,7 +55,7 @@ function useSelection() {
 
     return {
         selection,
-        setPosition,
+        setSelectPosition,
     };
 }
 

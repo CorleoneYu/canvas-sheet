@@ -67,13 +67,26 @@ function useCell() {
         return cell;
     }, []);
 
+    const updateCellValue = useCallback(
+        (cellId: string, value: string) => {
+            const cell = cellsMap.get(cellId);
+            if (!cell) {
+                return;
+            }
+
+            cell.value = value;
+            setCells([...cells]);
+        },
+        [cells, cellsMap],
+    );
+
     return {
         cells,
-        setCells,
         getCells,
         createCell,
         getCellsByRowId,
         getCellsByColId,
+        updateCellValue,
     };
 }
 
