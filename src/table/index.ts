@@ -1,2 +1,2 @@
-import TableList from './component/table-list';
+import TableList from './render-dom/table-list';
 export default TableList;
