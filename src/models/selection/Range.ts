@@ -1,25 +1,22 @@
+import Position from './Position';
+
 interface IRangeProps {
-    startRowIdx: number;
-    endRowIdx: number;
-    startColIdx: number;
-    endColIdx: number;
+    // start 不一定在 end 前面， 取决于用户先点了哪个
+    start: Position;
+    end: Position;
 }
 
 /**
  * 选区范围
  */
 class Range {
-    public startRowIdx: number;
-    public endRowIdx: number;
-    public startColIdx: number;
-    public endColIdx: number;
+    public start: Position;
+    public end: Position;
 
     public constructor(props: IRangeProps) {
-        const { startColIdx, startRowIdx, endColIdx, endRowIdx } = props;
-        this.startColIdx = startColIdx;
-        this.endColIdx = endColIdx;
-        this.startRowIdx = startRowIdx;
-        this.endRowIdx = endRowIdx;
+        const { start, end } = props;
+        this.start = start;
+        this.end = end;
     }
 }
 

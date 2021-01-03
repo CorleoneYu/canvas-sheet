@@ -19,7 +19,7 @@ function findCell(event: React.MouseEvent): Element | null {
     const path: Element[] = (event.nativeEvent as any).path || [];
     for (let i = 0; i < path.length; i++) {
         const cur = path[i];
-        if (cur.getAttribute('data-is-cell')) {
+        if (cur.getAttribute?.('data-is-cell')) {
             return cur;
         }
     }

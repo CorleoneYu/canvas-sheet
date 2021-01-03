@@ -1,6 +1,6 @@
 import React from 'react';
 import { ICell, getCellId } from '../../models/useCell';
-import useSelectionModel, { isCellActive } from '../../models/useSelection';
+import { useSelectionModel, isCellActive } from '../../models/use-selection';
 import useEditingModel, { isCellEditing } from '../../models/useEditing';
 import Editor from './editors';
 

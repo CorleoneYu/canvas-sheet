@@ -4,7 +4,7 @@ interface IPositionProps {
 }
 
 /**
- * 选区（单个点）
+ * 位置
  */
 class Position {
     public rowIdx: number;

@@ -4,7 +4,7 @@ import RowList from '../row';
 import useTableModel, { ITable } from '../../models/useTable';
 import useColModel from '../../models/useCol';
 import useRowModel from '../../models/useRow';
-import useSelectionModel, { isSamePos } from '../../models/useSelection';
+import { useSelectionModel, isSamePos } from '../../models/use-selection';
 import useEditingModel from '../../models/useEditing';
 import { TableBox } from './style';
 import { getPositionFromEvent } from './utils';
@@ -18,8 +18,8 @@ const TableComp = (props: ITableProps) => {
     const { insertRow, insertCol } = useTableModel();
     const { getCols } = useColModel();
     const { getRows } = useRowModel();
-    const { setSelectPosition, selection } = useSelectionModel();
-    const { editing, setEditingPosition } = useEditingModel();
+    const { updateSelection, range } = useSelectionModel();
+    const { editing, updateEditing } = useEditingModel();
 
     const rows = getRows(table.rowIds);
     const cols = getCols(table.colIds);
@@ -35,32 +35,32 @@ const TableComp = (props: ITableProps) => {
     const handleClick = useCallback(
         (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
             const pos = getPositionFromEvent(event);
-            console.log('handle click', (event.nativeEvent as any).path, pos);
+            console.log('handle click', pos);
             if (!pos) {
-                setSelectPosition(null);
-                setEditingPosition(null);
+                updateSelection(null);
+                updateEditing(null);
                 return;
             }
 
-            setSelectPosition(pos);
+            updateSelection(pos);
             if (editing.position && !isSamePos(editing.position, pos)) {
-                setEditingPosition(null);
+                updateEditing(null);
             }
         },
-        [setSelectPosition, setEditingPosition, editing.position],
+        [updateSelection, updateEditing, editing.position],
     );
 
     const handleDClick = useCallback(
         (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
             const pos = getPositionFromEvent(event);
-            console.log('handle double click', (event.nativeEvent as any).path, pos);
+            console.log('handle double click', pos);
             if (!pos) {
                 return;
             }
 
-            setEditingPosition(pos);
+            updateEditing(pos);
         },
-        [setEditingPosition],
+        [updateEditing],
     );
 
     return (
@@ -84,11 +84,9 @@ const TableComp = (props: ITableProps) => {
             </div>
             <div className="table-footer">
                 <p>
-                    activeCell - row: {selection.position?.rowIdx} col: {selection.position?.colIdx}
+                    activeCell - row: {range?.start.rowIdx} col: {range?.start.colIdx}
                 </p>
-                <p>
-                    editing - row: {editing.position?.rowIdx} col: {editing.position?.colIdx}
-                </p>
+                <p>editing - row:</p>
             </div>
         </TableBox>
     );

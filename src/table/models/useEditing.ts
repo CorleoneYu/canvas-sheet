@@ -3,7 +3,7 @@
  */
 import { useState, useCallback } from 'react';
 import { createModel } from 'hox';
-import { IPosition } from './useSelection';
+import { IPosition } from './use-selection';
 
 interface IEditing {
     position: IPosition | null;
@@ -29,14 +29,14 @@ export function isCellEditing(editing: IEditing, pos: IPosition) {
 function useEditing() {
     const [editing, setEditing] = useState(defaultEditing);
 
-    const setEditingPosition = useCallback((position: IPosition | null) => {
+    const updateEditing = useCallback((position: IPosition | null) => {
         setEditing((preEditing) => ({
             position,
         }));
     }, []);
     return {
         editing,
-        setEditingPosition,
+        updateEditing,
     };
 }
 
