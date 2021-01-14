@@ -1,14 +1,15 @@
 import { useCallback, useState, useMemo } from 'react';
 import { createModel } from 'hox';
 import useCellModel from './useCell';
-import { INIT_COUNT, defaultRows } from '../constant/mock';
+import { defaultRows } from '../constant/mock';
 
 export interface IRow {
     rowId: string;
     colIds: string[];
 }
 
-let rowIdx = INIT_COUNT.row + 1;
+// mock INIT_COUNT = 3
+let rowIdx = 3 + 1;
 
 function useRow() {
     const [rows, setRows] = useState<IRow[]>(defaultRows);

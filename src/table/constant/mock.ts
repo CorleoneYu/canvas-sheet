@@ -2,9 +2,9 @@ import { ICell } from '../models/useCell';
 import { ICol } from '../models/useCol';
 import { IRow } from '../models/useRow';
 import { ITable } from '../models/useTable';
-import { ColType } from '../../models/col/Col';
+import { ColType } from '../typing';
 
-export const INIT_COUNT = {
+const INIT_COUNT = {
     row: 3,
     col: 3,
     table: 1,

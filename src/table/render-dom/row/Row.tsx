@@ -20,7 +20,7 @@ const RowComp = (props: IProps) => {
 
     return (
         <RowBox>
-            <Header index={index} row={row} />
+            <Header index={index} />
             <CellList cells={cells} rowCount={rowCount} rowIdx={index} />
         </RowBox>
     );

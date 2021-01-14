@@ -1,15 +1,15 @@
 import { useCallback, useMemo, useState } from 'react';
 import { createModel } from 'hox';
-import { ColType } from '../../models/col/Col';
-import { INIT_COUNT, defaultCols } from '../constant/mock';
-
+import { defaultCols } from '../constant/mock';
+import { ColType } from '../typing';
 export interface ICol {
     colId: string;
     type: ColType;
     name: string;
 }
 
-let colIdx = INIT_COUNT.col + 1;
+// mock INIT_COUNT = 3
+let colIdx = 3 + 1;
 
 function useCol() {
     const [cols, setCols] = useState<ICol[]>(defaultCols);
