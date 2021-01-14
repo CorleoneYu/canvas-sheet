@@ -1,6 +1,6 @@
-# canvas-sheet
+# fe-square
 
-用来练手的项目集合。
+fe-square（前端广场）：用来练手的项目集合。
 
 ## table
 
