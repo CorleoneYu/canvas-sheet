@@ -11,7 +11,7 @@ const Router = () => {
                 <Route path="/table-dom" component={TableList} />
                 <Route path="/editor" component={Editor} />
                 <Route path="/di" component={Di} />
-                <Redirect from="*" to="/table-dom" />
+                <Redirect from="*" to="/di" />
             </Switch>
         </BrowserRouter>
     );

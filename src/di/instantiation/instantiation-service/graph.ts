@@ -21,7 +21,9 @@ export default class Graph<T> {
     roots(): Node<T>[] {
         const ret: Node<T>[] = [];
         for (let node of this.nodes.values()) {
-            ret.push(node);
+            if (node.outgoing.size === 0) {
+                ret.push(node);
+            }
         }
         return ret;
     }

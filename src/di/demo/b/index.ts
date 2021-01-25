@@ -1,13 +1,9 @@
-import { createDecorator } from '../instantiation/instantiation';
-
-export interface IBService {
-    id: string;
-    name: string;
-}
+import { createDecorator } from '../../instantiation';
+import { IBService } from './b.interface';
 
 export const IBServiceDecorator = createDecorator<IBService>('BService');
 
-export default class BService implements IBService {
+export class BServiceImpl implements IBService {
     id: string;
     name: string;
     constructor() {
