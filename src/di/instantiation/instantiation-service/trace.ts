@@ -46,6 +46,7 @@ export default class Trace {
             const prefix = new Array(n + 1).join('\t');
             for (const [id, first, child] of trace._deps) {
                 if (first && child) {
+                    // 依赖的服务被顺带创建
                     causedCreation = true;
                     res.push(`${prefix}CREATES -> ${id}`);
                     const nested = printChild(n + 1, child);
@@ -53,13 +54,14 @@ export default class Trace {
                         res.push(nested);
                     }
                 } else {
+                    // 该服务已被创建，直接使用
                     res.push(`${prefix}uses -> ${id}`);
                 }
             }
             return res.join('\n');
         }
 
-        let lines = [
+        const lines = [
 			`${this.type === TraceType.Creation ? 'CREATE' : 'CALL'} ${this.name}`,
 			`${printChild(1, this)}`,
 			`DONE, took ${dur.toFixed(2)}ms (grand total ${Trace._totals.toFixed(2)}ms)`

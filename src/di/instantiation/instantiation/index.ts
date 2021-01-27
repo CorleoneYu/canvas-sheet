@@ -1,4 +1,6 @@
 import { serviceIds, DI_DEPENDENCIES, DI_TARGET } from './utils';
+import ServiceCollection from '../serviceCollection';
+import { SyncDescriptor } from '../descriptors';
 
 // 服务标识, 有两个作用
 // 1. 服务的 id
@@ -49,4 +51,41 @@ function storeServiceDependency(id: Function, target: Function, index: number, o
 
 export function getServiceDependencies(ctor: any): { id: ServiceIdentifier<any>; index: number; optional: boolean }[] {
     return ctor[DI_DEPENDENCIES] || [];
+}
+
+export function printServiceDependencies(ctor: any, services: ServiceCollection) {
+    function printChild(n: number, ctor: any) {
+        const deps = getServiceDependencies(ctor);
+        const res: string[] = [];
+        const prefix = new Array(n + 1).join('\t');
+
+        deps.forEach(dep => {
+            const { id } = dep;
+            const childCtorOrDesc = services.get(id);
+            if (!childCtorOrDesc) {
+                res.push(`${prefix}-> can't find ${id}`);
+                return;
+            }
+
+            let childCtor = childCtorOrDesc;
+            if (childCtorOrDesc instanceof SyncDescriptor) {
+                childCtor = childCtorOrDesc.ctor;
+            }
+
+            res.push(`${prefix}-> child: ${id}`);
+            const nested = printChild(n + 1, childCtor);
+            if (nested) {
+                res.push(nested);
+            }
+        });
+
+        return res.join('\n');
+    }
+
+    const lines = [
+        `${ctor.name}`,
+        `${printChild(1, ctor)}`,
+    ];
+
+    console.log(lines.join('\n'));
 }

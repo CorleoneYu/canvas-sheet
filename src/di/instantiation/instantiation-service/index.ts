@@ -51,6 +51,7 @@ export class InstantiationService implements IInstantiationService {
         let serviceDependencies = getServiceDependencies(ctor).sort((a, b) => a.index - b.index);
         let serviceArgs: any[] = [];
         for (const dependency of serviceDependencies) {
+            // dependency.id 为 装饰器
             let service = this._getOrCreateServiceInstance(dependency.id, trace);
             if (!service) {
                 throw new Error(`[createInstance] ${ctor.name} depends on UNKNOWN service ${dependency.id}.`);
@@ -104,7 +105,7 @@ export class InstantiationService implements IInstantiationService {
      *  1.1 若为 desc，则说明还未实例化，执行创建逻辑
      *  1.2 若不为 desc, 则说明已实例化，返回 实例
      *    
-     * @param id 服务id
+     * @param id 服务id（装饰器）
      */
     private _getOrCreateServiceInstance<T>(id: ServiceIdentifier<T>, trace: Trace): T {
         let thing = this._getServiceInstanceOrDescriptor(id);
