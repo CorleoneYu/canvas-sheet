@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"],
+            "@di/*": ["./src/di/*"],
+            "@editor/*": ["./src/editor/*"],
+            "@cool-table/*": ["./src/cool-table/*"],
+            "@cool-canvas/*": ["./src/lib/cool-canvas/*"]
+        }
+    }
+}
