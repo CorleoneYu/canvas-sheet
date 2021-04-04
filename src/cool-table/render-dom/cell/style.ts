@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { defaultCellWidth, defaultCellHeight, gray } from '../../constant/style';
+import { defaultCellWidth, defaultCellHeight, gray } from '@cool-table/constant/style';
 
 interface ICellBoxProps {
     isActive: boolean;
@@ -10,22 +10,15 @@ interface ICellBoxProps {
 }
 
 export const CellBox = styled.div`
+    position: relative;
     box-sizing: border-box;
     width: ${defaultCellWidth};
     height: ${defaultCellHeight};
     line-height: ${defaultCellHeight};
     text-align: center;
     border: 1px solid ${gray};
-    /* border-top: 1px solid ${gray};
-    border-bottom: ${(props: ICellBoxProps) => {
-        if (!props.isLastRow) {
-            return 'none';
-        }
-        return `1px solid ${gray};`;
-    }}; */
     border-color: ${(props: ICellBoxProps) => {
         return props.isActive ? 'blue' : gray;
     }};
-
     cursor: pointer;
 `;

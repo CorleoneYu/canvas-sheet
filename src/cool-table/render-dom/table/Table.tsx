@@ -47,7 +47,7 @@ const TableComp = (props: ITableProps) => {
                 updateEditing(null);
             }
         },
-        [updateSelection, updateEditing, editing.position],
+        [editing.position, updateSelection, updateEditing],
     );
 
     const handleDClick = useCallback(

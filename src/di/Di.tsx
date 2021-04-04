@@ -1,5 +1,5 @@
 import React from 'react';
-import './demo';
+// import './demo';
 
 const Di = () => {
    return <div>Di</div>

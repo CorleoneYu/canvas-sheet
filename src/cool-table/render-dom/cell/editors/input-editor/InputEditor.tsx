@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import { InputEditorBox } from './style';
 
@@ -9,6 +9,7 @@ interface IProps {
 
 const InputEditor = (props: IProps) => {
     const { value } = props;
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,9 +19,16 @@ const InputEditor = (props: IProps) => {
         [props],
     );
 
+    useEffect(() => {
+        if (!inputRef.current) {
+            return;
+        }
+        inputRef.current.focus();
+    }, []);
+
     return (
-        <InputEditorBox className="input-editor">
-            <input value={value} onChange={handleChange} />
+        <InputEditorBox>
+            <input ref={inputRef} className="input-editor" value={value} onChange={handleChange} />
         </InputEditorBox>
     );
 };
