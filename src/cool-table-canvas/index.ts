@@ -1,2 +1,2 @@
-import Table from './render-canvas';
+import Table from './konva';
 export default Table;

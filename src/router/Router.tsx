@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import TableDom from '@/cool-table/render-dom';
-import TableCanvas from '@/cool-table-canvas/render-canvas';
+import TableCanvas from '@/cool-table-canvas';
 import Editor from '@/editor';
 import Di from '@/di';
 
