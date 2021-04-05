@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import ColComp from '../col';
 import RowList from '../row';
-import useTableModel, { ITable } from '../../models/useTable';
+import { ITable } from '@/cool-table/typing';
+import useTableModel from '../../models/useTable';
 import useColModel from '../../models/useCol';
 import useRowModel from '../../models/useRow';
 import { useSelectionModel, isSamePos } from '../../models/use-selection';

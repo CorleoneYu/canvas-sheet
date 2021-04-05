@@ -1,5 +1,5 @@
 import ISprite, { IContent } from './sprite.interface';
-import IStyle from '@cool-canvas/style/style.interface';
+import IStyle from '@/lib/cool-canvas/style/style.interface';
 
 interface ISpriteProps {
     content: IContent;

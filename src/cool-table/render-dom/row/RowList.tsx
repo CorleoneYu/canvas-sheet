@@ -1,6 +1,6 @@
 import React from 'react';
 import RowComp from './Row';
-import { IRow } from '../../models/useRow';
+import { IRow } from '@/cool-table/typing';
 
 interface IRowListProps {
     rows: IRow[];

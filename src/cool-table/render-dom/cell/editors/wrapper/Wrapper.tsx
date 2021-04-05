@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
-import useCellModel, { ICell, getCellId } from '../../../../models/useCell';
+import useCellModel, { getCellId } from '@/cool-table/models/useCell';
+import { ICell } from '@/cool-table/typing';
 import InputEditor from '../input-editor';
 
 interface IProps {

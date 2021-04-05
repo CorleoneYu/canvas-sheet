@@ -1,5 +1,6 @@
 import React from 'react';
-import { ICell, getCellId } from '../../models/useCell';
+import { getCellId } from '../../models/useCell';
+import { ICell } from '@/cool-table/typing';
 import CellComp from './Cell';
 
 interface ICellListProps {

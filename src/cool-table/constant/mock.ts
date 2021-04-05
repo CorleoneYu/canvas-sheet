@@ -1,8 +1,4 @@
-import { ICell } from '../models/useCell';
-import { ICol } from '../models/useCol';
-import { IRow } from '../models/useRow';
-import { ITable } from '../models/useTable';
-import { ColType } from '../typing';
+import { ColType, ICell, ICol, ITable, IRow } from '../typing';
 
 const INIT_COUNT = {
     row: 3,

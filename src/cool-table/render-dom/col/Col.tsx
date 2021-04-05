@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICol } from '../../models/useCol';
+import { ICol } from '@/cool-table/typing';
 import { ColBox } from './style';
 
 interface IProps {

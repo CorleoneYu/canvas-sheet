@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Painter, Sprite } from '@cool-canvas/index';
-import IPainter from '@cool-canvas/painter/painter.interface';
+import { Painter, Sprite } from '@/lib/cool-canvas/index';
+import IPainter from '@/lib/cool-canvas/painter/painter.interface';
 
 const Container = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);

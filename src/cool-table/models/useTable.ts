@@ -2,13 +2,8 @@ import { useCallback, useState, useMemo } from 'react';
 import { createModel } from 'hox';
 import useRowModel from './useRow';
 import useColModel from './useCol';
-import { defaultTables } from '../constant/mock';
-
-export interface ITable {
-    tableId: string;
-    rowIds: string[];
-    colIds: string[];
-}
+import { ITable } from '@/cool-table/typing';
+import { defaultTables } from '@/cool-table/constant/mock';
 
 let tableIdx = 1 + 1;
 

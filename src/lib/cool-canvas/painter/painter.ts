@@ -1,4 +1,4 @@
-import ISprite from '@cool-canvas/sprite/sprite.interface';
+import ISprite from '@/lib/cool-canvas/sprite/sprite.interface';
 
 interface IConfig {
     el: HTMLCanvasElement;

@@ -1,12 +1,8 @@
 import { useCallback, useState, useMemo } from 'react';
 import { createModel } from 'hox';
 import useCellModel from './useCell';
-import { defaultRows } from '../constant/mock';
-
-export interface IRow {
-    rowId: string;
-    colIds: string[];
-}
+import { defaultRows } from '@/cool-table/constant/mock';
+import { IRow } from '@/cool-table/typing';
 
 // mock INIT_COUNT = 3
 let rowIdx = 3 + 1;

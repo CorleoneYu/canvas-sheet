@@ -1,12 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { createModel } from 'hox';
-import { defaultCols } from '../constant/mock';
-import { ColType } from '../typing';
-export interface ICol {
-    colId: string;
-    type: ColType;
-    name: string;
-}
+import { defaultCols } from '@/cool-table/constant/mock';
+import { ColType, ICol } from '@/cool-table/typing';
 
 // mock INIT_COUNT = 3
 let colIdx = 3 + 1;

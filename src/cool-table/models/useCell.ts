@@ -1,12 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { createModel } from 'hox';
-import { defaultCells } from '../constant/mock';
-
-export interface ICell {
-    rowId: string;
-    colId: string;
-    value: string;
-}
+import { defaultCells } from '@/cool-table/constant/mock';
+import { ICell } from '@/cool-table/typing';
 
 export const getCellId = (cell: ICell) => {
     return `${cell.rowId}-${cell.colId}`;

@@ -10,9 +10,5 @@ module.exports = override(
 
     addWebpackAlias({
         '@': path.join(__dirname, '/src'),
-        '@di': path.join(__dirname, '/src/di'),
-        '@editor': path.join(__dirname, '/src/editor'),
-        '@cool-table': path.join(__dirname, '/src/cool-table'),
-        '@cool-canvas': path.join(__dirname, '/src/lib/cool-canvas'),
     }),
 );

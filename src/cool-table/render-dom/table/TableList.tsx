@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITable } from '../../models/useTable';
+import { ITable } from '@/cool-table/typing';
 import TableComp from './Table';
 
 interface ITableListProps {

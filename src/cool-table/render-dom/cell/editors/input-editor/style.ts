@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { defaultCellWidth, defaultCellHeight, gray } from '@cool-table/constant/style';
+import { defaultCellWidth, defaultCellHeight } from '@/cool-table/constant/style';
 
 export const InputEditorBox = styled.div`
     .input-editor {

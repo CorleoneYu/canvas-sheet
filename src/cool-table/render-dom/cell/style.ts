@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { defaultCellWidth, defaultCellHeight, gray } from '@cool-table/constant/style';
+import { defaultCellWidth, defaultCellHeight, gray } from '@/cool-table/constant/style';
 
 interface ICellBoxProps {
     isActive: boolean;

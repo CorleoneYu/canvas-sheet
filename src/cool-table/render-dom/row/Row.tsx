@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { IRow } from '../../models/useRow';
+import { IRow } from '@/cool-table/typing';
 import useCellModel from '../../models/useCell';
 import Header from './Header';
 import CellList from '../cell';

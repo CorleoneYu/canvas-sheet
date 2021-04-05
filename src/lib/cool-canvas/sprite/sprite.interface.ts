@@ -1,4 +1,4 @@
-import IStyle from '@cool-canvas/style/style.interface';
+import IStyle from '@/lib/cool-canvas/style/style.interface';
 
 export interface IRect {
     left: number;
