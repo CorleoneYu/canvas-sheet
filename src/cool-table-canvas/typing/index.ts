@@ -6,10 +6,6 @@ export interface ICell {
     y: number;
     width: number;
     height: number;
-    border: {
-        color: string,
-        width: number,
-    }
 }
 
 export interface IRow {
@@ -27,14 +23,6 @@ export interface IColHeader {
 }
 
 export interface ITableHeader {
-    rowWidth: number; // 每一行头都等宽
-    colHeight: number; // 每一列头都等高
-    background: string;
-    border: {
-        color: string,
-        width: number,
-    }
-
     rowHeaders: IRowHeader[];
     colHeaders: IColHeader[];
 }

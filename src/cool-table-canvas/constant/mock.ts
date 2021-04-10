@@ -1,23 +1,16 @@
 import { ICell, IRow, ITable, ITableOverview, ITableHeader, IColHeader, IRowHeader } from '@/cool-table-canvas/typing';
-import { defaultStyle } from './index';
-
-const DEFAULT_CELL_COUNT = 5;
-const DEFAULT_ROW_COUNT = 20;
+import { defaultConfig } from './index';
 
 function initCells(rowIndex: number, count: number): ICell[] {
     const cells: ICell[] = [];
-    const { cell } = defaultStyle;
+    const { cell } = defaultConfig.style;
 
     for (let i = 0; i < count; i++) {
         cells.push({
             width: cell.width,
             height: cell.height,
             x: i * cell.width,
-            y: (rowIndex + 1)* cell.height,
-            border: {
-                color: defaultStyle.cell.borderColor,
-                width: defaultStyle.cell.borderWidth,
-            }
+            y: rowIndex * cell.height,
         });
     }
 
@@ -41,7 +34,7 @@ function initHeader(rowCount: number, colCount: number): ITableHeader {
     for (let i = 0; i < rowCount; i++) {
         rowHeaders.push({
             title: `${i + 1}`,
-            height: defaultStyle.cell.height,
+            height: defaultConfig.style.cell.height,
         });
     }
 
@@ -50,28 +43,20 @@ function initHeader(rowCount: number, colCount: number): ITableHeader {
     for (let i = 0; i < colCount; i++) {
         colHeaders.push({
             title: String.fromCharCode(ACode + i),
-            width: defaultStyle.cell.width,
+            width: defaultConfig.style.cell.width,
         });
     }
 
-    const { borderColor, borderWidth, background, row, col } = defaultStyle.header;
     return {
         rowHeaders,
         colHeaders,
-        border: {
-            color: borderColor,
-            width: borderWidth,
-        },
-        background: background,
-        rowWidth: row.width,
-        colHeight: col.height,
     };
 }
 
 function initTable(): ITable {
     const overview: ITableOverview = {
-        rowCount: DEFAULT_ROW_COUNT,
-        colCount: DEFAULT_CELL_COUNT,
+        rowCount: defaultConfig.overview.rowCount,
+        colCount: defaultConfig.overview.colCount,
     };
 
     const header = initHeader(overview.rowCount, overview.colCount);

@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { IRow } from '@/cool-table-canvas/typing';
 import Row from '../row';
-import Header from '../header';
-import { Group } from 'react-konva';
-import { ITable } from '@/cool-table-canvas/typing';
-import { defaultTable } from '@/cool-table-canvas/constant/mock';
 
-const Table = () => {
-    const [table, setTable] = useState<ITable>(defaultTable);
-    const { header } = table;
+interface ITableProps {
+    rows: IRow[];
+}
+const Table: React.FC<ITableProps> = (props) => {
+    const { rows } = props;
+
     return (
-        <Group>
-            <Header header={header} />
-            {table.rows.map((row, index) => (
+        <>
+            {rows.map((row, index) => (
                 <Row row={row} key={index} />
             ))}
-        </Group>
+        </>
     );
 };
 

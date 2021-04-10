@@ -1,26 +1,16 @@
-const defaultStyle = {
-    cell: {
-        width: 107,
-        height: 24,
-        borderColor: '#cdcdcd',
-        borderWidth: 1,
+const defaultConfig = {
+    overview: {
+        rowCount: 50,
+        colCount: 20,
     },
-    header: {
-        background: '#eaebec',
-        borderColor: '#cdcdcd',
-        borderWidth: 1,
-        row: {
-            width: 50,
-            height: 24,
-            
-        },
-        col: {
+    style: {
+        cell: {
             width: 107,
             height: 24,
-        },
-    }
-};
+        }
+    },
+}
 
 export {
-    defaultStyle,
+    defaultConfig,
 }
