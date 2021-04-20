@@ -1,7 +1,7 @@
 const defaultConfig = {
     overview: {
-        rowCount: 50,
-        colCount: 20,
+        rowCount: 500,
+        colCount: 3,
     },
     style: {
         cell: {
