@@ -9,8 +9,6 @@ function initCells(rowIndex: number, count: number): ICell[] {
         cells.push({
             width: cell.width,
             height: cell.height,
-            x: i * cell.width,
-            y: rowIndex * cell.height,
         });
     }
 

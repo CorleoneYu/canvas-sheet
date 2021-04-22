@@ -4,6 +4,8 @@ import { ICell } from '@/cool-table-canvas/typing';
 
 interface ICellProps {
     cell: ICell;
+    x: number;
+    y: number;
 }
 
 export const cellConfig = {
@@ -14,8 +16,8 @@ export const cellConfig = {
 };
 
 const Cell = (props: ICellProps) => {
-    const { cell } = props;
-    const { width, height, x, y } = cell;
+    const { cell, x, y } = props;
+    const { width, height } = cell;
     const { border } = cellConfig;
 
     return <Rect x={x} y={y} width={width} height={height} stroke={border.color} strokeWidth={border.width} />;

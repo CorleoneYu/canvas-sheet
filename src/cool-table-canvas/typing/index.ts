@@ -2,8 +2,6 @@
 // 思考：x, y, width, height 哪些放在数据层，哪些在渲染层
 
 export interface ICell {
-    x: number;
-    y: number;
     width: number;
     height: number;
 }

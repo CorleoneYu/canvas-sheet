@@ -16,6 +16,11 @@ interface IScrollBarProps {
 
 const ScrollBar: React.FC<IScrollBarProps> = (props) => {
     const { direction, viewSize, totalSize, offset } = props;
+
+    if (viewSize >= totalSize) {
+        return null;
+    }
+
     const sizePercent = parseFloat((viewSize / totalSize).toFixed(2));
     const size = sizePercent * viewSize;
 

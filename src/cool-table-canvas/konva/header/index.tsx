@@ -14,8 +14,8 @@ export const headerConfig = {
     color: {
         normal: 'rgba(0, 0, 0, 0.88)',
     },
-    colHeight: 24,
-    rowWidth: 50,
+    colHeaderHeight: 24,
+    rowHeaderWidth: 50,
 };
 
 interface IColHeaderProps {
@@ -24,7 +24,7 @@ interface IColHeaderProps {
 
 export const ColHeader: React.FC<IColHeaderProps> = (props) => {
     const { colHeaders } = props;
-    const { border, background, colHeight, color } = headerConfig;
+    const { border, background, colHeaderHeight, color } = headerConfig;
     return (
         <>
             {colHeaders.map((colHeader, index) => (
@@ -34,7 +34,7 @@ export const ColHeader: React.FC<IColHeaderProps> = (props) => {
                         x={index * colHeader.width}
                         y={0}
                         width={colHeader.width}
-                        height={colHeight}
+                        height={colHeaderHeight}
                         fill={background.normal}
                         stroke={border.color}
                         strokeWidth={border.width}
@@ -44,7 +44,7 @@ export const ColHeader: React.FC<IColHeaderProps> = (props) => {
                         y={0}
                         x={index * colHeader.width}
                         width={colHeader.width}
-                        height={colHeight}
+                        height={colHeaderHeight}
                         fill={color.normal}
                         align="center"
                         verticalAlign="middle"
@@ -62,7 +62,7 @@ interface IRowHeaderProps {
 
 export const RowHeader: React.FC<IRowHeaderProps> = (props) => {
     const { rowHeaders } = props;
-    const { border, background, rowWidth, color } = headerConfig;
+    const { border, background, rowHeaderWidth, color } = headerConfig;
 
     return (
         <>
@@ -72,7 +72,7 @@ export const RowHeader: React.FC<IRowHeaderProps> = (props) => {
                         key={`rect-${rowHeader.title}`}
                         x={0}
                         y={index * rowHeader.height}
-                        width={rowWidth}
+                        width={rowHeaderWidth}
                         height={rowHeader.height}
                         fill={background.normal}
                         stroke={border.color}
@@ -82,7 +82,7 @@ export const RowHeader: React.FC<IRowHeaderProps> = (props) => {
                         key={`text-${rowHeader.title}`}
                         x={0}
                         y={index * rowHeader.height}
-                        width={rowWidth}
+                        width={rowHeaderWidth}
                         height={rowHeader.height}
                         fill={color.normal}
                         align="center"
@@ -99,13 +99,13 @@ interface IAllSelectHeaderProps {}
 
 // 行列交叉处，用于全选
 export const AllSelectHeader: React.FC<IAllSelectHeaderProps> = (props) => {
-    const { border, background, colHeight, rowWidth } = headerConfig;
+    const { border, background, colHeaderHeight, rowHeaderWidth } = headerConfig;
     return (
         <Rect
             x={0}
             y={0}
-            width={rowWidth}
-            height={colHeight}
+            width={rowHeaderWidth}
+            height={colHeaderHeight}
             fill={background.normal}
             stroke={border.color}
             strokeWidth={border.width}

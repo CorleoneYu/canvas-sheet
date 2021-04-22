@@ -1,19 +1,19 @@
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Konva from 'konva';
 import { Group, Rect, Text } from 'react-konva';
 import ScrollBar, { barConfig } from '../scroll-bar';
-
+import useScroll from './useScroll';
 export interface IOffset {
     x: number;
     y: number;
 }
 
-export interface ISize {
+interface ISize {
     width: number;
     height: number;
 }
 
-export interface ILocation {
+interface ILocation {
     x: number;
     y: number;
 }
@@ -23,161 +23,114 @@ interface IItem extends ISize, ILocation {
 }
 
 interface IScrollViewProps {
-    width: number;
-    height: number;
-    contentWidth: number;
-    contentHeight: number;
-    onScroll?: (offset: Partial<IOffset>) => void;
-    list: ISize[];
-}
+    // 视窗宽高
+    viewWidth: number;
+    viewHeight: number;
 
-const maxScrollX = 0;
-const maxScrollY = 0;
+    // 内容宽高
+    widths: number[];
+    heights: number[];
+    onScroll?: (offset: Partial<IOffset>) => void;
+}
 
 const { size, padding } = barConfig;
 
-/**
- * 滚动需要
- * 1. 容器宽高 width height
- * 2. 内容宽高 ContentWidth ContentHeight
- * ⚠️ : 默认 width < ContentWidth，则:
- * 1. 最大滚动值固定 0，最小则为 width - ContentWidth
- * 2. 高度同理
- */
 const ScrollView: React.FC<IScrollViewProps> = (props) => {
-    const { width, height, contentWidth, contentHeight, children, onScroll, list } = props;
-    const [x, setX] = useState<number>(0);
-    const [y, setY] = useState<number>(0);
+    const { viewWidth, viewHeight, onScroll, widths, heights } = props;
 
-    const minScrollX = useMemo(() => width - contentWidth, [width, contentWidth]);
-    const minScrollY = useMemo(() => height - contentHeight, [height, contentHeight]);
+    const { locations: tops, handleScroll: handleYScroll, firstIndex: yFirst, lastIndex: yLast, offset: y } = useScroll(
+        {
+            sizes: heights,
+            viewSize: viewHeight,
+        },
+    );
+
+    const { locations: lefts, handleScroll: handleXScroll, firstIndex: xFirst, lastIndex: xLast, offset: x } = useScroll(
+        {
+            sizes: widths,
+            viewSize: viewWidth,
+        },
+    );
+
+    const contentHeight = useMemo(() => tops[tops.length - 1], [tops]);
+    const contentWidth = useMemo(() => lefts[lefts.length - 1], [lefts]);
 
     const handleWheel = useCallback(
-        (event: Konva.KonvaEventObject<WheelEvent>) => {
+        async (event: Konva.KonvaEventObject<WheelEvent>) => {
             const { deltaX, deltaY } = event.evt;
-            const delta = 1;
 
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                setX((pre) => {
-                    const value = pre - delta * deltaX;
-                    const newX = limit(maxScrollX, minScrollX, value);
-                    onScroll?.({
-                        x: newX,
-                    });
-                    return newX;
+                const newX = await handleXScroll(deltaX);
+                onScroll?.({
+                    x: newX,
                 });
                 return;
             }
 
-            setY((pre) => {
-                const value = pre - delta * deltaY;
-                const newY = limit(maxScrollY, minScrollY, value);
-                onScroll?.({
-                    y: newY,
-                });
-                return newY;
+            const newY = await handleYScroll(deltaY);
+            onScroll?.({
+                y: newY,
             });
         },
-        [minScrollX, minScrollY, onScroll],
+        [onScroll, handleYScroll, handleXScroll],
     );
 
-    const tops = useMemo(() => {
-        const tops = [0];
-        list.forEach((item) => {
-            const current = item.height + tops[tops.length - 1];
-            tops.push(current);
-        });
-        console.log('tops', tops);
-        return tops;
-    }, [list]);
+    const visibleRows: IItem[][] = useMemo(() => {
+        const rows: IItem[][] = [];
+        for (let i = yFirst; i <= yLast; i++) {
+            const currentRow: IItem[] = [];
 
-    const visibleList: IItem[] = useMemo(() => {
-        const offsetY = Math.abs(y);
-        const firstIndex = getTargetIdx(tops, offsetY) - 1;
-        const lastIndex = getTargetIdx(tops, offsetY + height);
-        console.log('firstIndex', firstIndex, 'offsetY', offsetY);
-        console.log('lastIndex', lastIndex, 'offsetY + height', offsetY + height);
-
-        let current = y % 24;
-        const visibleList: IItem[] = list.slice(firstIndex, lastIndex + 1).map((size, index) => {
-            const visible: IItem = {
-                ...size,
-                x: 0,
-                y: current,
-                text: `${firstIndex + index}`,
-            };
-            current += size.height;
-            return visible;
-        });
-        console.log('visibleList: ', visibleList);
-        return visibleList;
-    }, [tops, y, height, list]);
+            for (let j = xFirst; j <= xLast; j++) {
+                currentRow.push({
+                    width: widths[j],
+                    height: heights[i],
+                    x: lefts[j] + x,
+                    y: tops[i] + y,
+                    text: `${i + 1}-${j + 1}`,
+                });
+            }
+            rows.push(currentRow);
+        }
+        return rows;
+    }, [yFirst, yLast, xFirst, xLast, tops, x, y, widths, heights, lefts]);
 
     return (
         <>
-            {/* <Group x={x} y={y} onWheel={handleWheel}>
-                {children}
-            </Group> */}
             <Group onWheel={handleWheel}>
-                {visibleList.map((item) => (
-                    <React.Fragment key={`test-${item.text}`}>
-                        <Rect
-                            x={item.x}
-                            y={item.y}
-                            width={item.width}
-                            height={item.height}
-                            stroke="#cdcdcd"
-                            strokeWidth={1}
-                        />
-                        <Text
-                            x={item.x}
-                            y={item.y}
-                            width={item.width}
-                            height={item.height}
-                            fill='rgba(0, 0, 0, 0.88)'
-                            align="center"
-                            verticalAlign="middle"
-                            text={`${item.text}`}
-                        />
-                    </React.Fragment>
-                ))}
+                {visibleRows.map((row) => {
+                    return row.map(cell => (
+                        <React.Fragment key={`test-${cell.text}`}>
+                            <Rect
+                                x={cell.x}
+                                y={cell.y}
+                                width={cell.width}
+                                height={cell.height}
+                                stroke="#cdcdcd"
+                                strokeWidth={1}
+                            />
+                            <Text
+                                x={cell.x}
+                                y={cell.y}
+                                width={cell.width}
+                                height={cell.height}
+                                fill="rgba(0, 0, 0, 0.88)"
+                                align="center"
+                                verticalAlign="middle"
+                            />
+                        </React.Fragment>
+                    ))
+                })}
             </Group>
-            <Group x={0} y={height - padding - size}>
+            <Group x={0} y={viewHeight - padding - size}>
                 {/* x 滚动轴 */}
-                <ScrollBar direction="x" offset={x} viewSize={width} totalSize={contentWidth} />
+                <ScrollBar direction="x" offset={x} viewSize={viewWidth} totalSize={contentWidth} />
             </Group>
-            <Group x={width - padding - size} y={0}>
+            <Group x={viewWidth - padding - size} y={0}>
                 {/* y 滚动轴 */}
-                <ScrollBar direction="y" offset={y} viewSize={height} totalSize={contentHeight} />
+                <ScrollBar direction="y" offset={y} viewSize={viewHeight} totalSize={contentHeight} />
             </Group>
         </>
     );
 };
-
-function limit(max: number, min: number, value: number) {
-    if (value > max) {
-        return max;
-    }
-
-    if (value < min) {
-        return min;
-    }
-
-    return value;
-}
-
-/**
- * 获取 target 在数组中合适的位置
- * @param numArray 递增的数组
- * @param target
- */
-function getTargetIdx(numArray: number[], target: number) {
-    for (let i = 0; i < numArray.length; i++) {
-        if (numArray[i] > target) {
-            return i;
-        }
-    }
-    return numArray.length;
-}
 
 export default ScrollView;
