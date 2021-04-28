@@ -90,6 +90,7 @@ const ScrollView: React.FC<IScrollViewProps> = (props) => {
                 });
             }
             rows.push(currentRow);
+            console.log('rows: ', rows[0]);
         }
         return rows;
     }, [yFirst, yLast, xFirst, xLast, tops, x, y, widths, heights, lefts]);

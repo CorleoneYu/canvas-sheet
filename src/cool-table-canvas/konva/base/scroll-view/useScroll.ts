@@ -36,7 +36,6 @@ function useScroll(props: IScrollProps) {
         return viewSize - last;
     }, [viewSize, locations]);
 
-    // FIXME：边界处理 minOffset
     const handleScroll = useCallback((deltaOffset: number): Promise<number> => {
         return new Promise((resolve) => {
             setOffset((pre) => {
@@ -53,9 +52,14 @@ function useScroll(props: IScrollProps) {
     const [firstIndex, lastIndex] = useMemo(() => {
         const positiveOffset = Math.abs(offset);
         
-        // 视窗中开始、结束项的下标
+        // 视窗中开始项的下标
         const firstIndex = getTargetIdx(locations, positiveOffset) - 1;
-        const lastIndex = getTargetIdx(locations, positiveOffset + viewSize);
+
+        let lastIndex = getTargetIdx(locations, positiveOffset + viewSize);
+        // 视窗中结束项的下标
+        if (lastIndex >= locations.length) {
+            lastIndex = locations.length - 1;
+        }
         return [firstIndex, lastIndex];
     }, [offset, locations, viewSize]);
 
@@ -91,6 +95,7 @@ function limit(max: number, min: number, value: number) {
             return i;
         }
     }
+
     return numArray.length;
 }
 

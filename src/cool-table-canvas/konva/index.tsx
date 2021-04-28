@@ -79,7 +79,7 @@ const Container = () => {
                             viewHeight={boxHeight - colHeaderHeight}
                             widths={widths}
                             heights={heights}
-                            onScroll={handleScroll}
+                            // onScroll={handleScroll}
                         />
                     </Layer>
                 </Stage>
