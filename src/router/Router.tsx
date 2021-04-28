@@ -10,10 +10,10 @@ const Router = () => {
         <BrowserRouter>
             <Switch>
                 <Route path="/table-dom" component={TableDom} />
-                <Route path="/table-canvas" component={TableCanvas} />
+                <Route path="/table-canvas/table" component={TableCanvas} />
                 <Route path="/editor" component={Editor} />
                 <Route path="/di" component={Di} />
-                <Redirect from="*" to="/table-canvas" />
+                <Redirect from="*" to="/table-canvas/table" />
             </Switch>
         </BrowserRouter>
     );

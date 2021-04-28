@@ -9,6 +9,7 @@ function initCells(rowIndex: number, count: number): ICell[] {
         cells.push({
             width: cell.width,
             height: cell.height,
+            value: '',
         });
     }
 

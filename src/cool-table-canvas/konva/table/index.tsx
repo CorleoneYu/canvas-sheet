@@ -1,8 +1,9 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Stage, Layer, Group } from 'react-konva';
 import { ITable } from '@/cool-table-canvas/typing';
-import ScrollView, { IOffset } from './base/scroll-view';
+import ScrollView, { IOffset, IRenderAttrRow } from '../base/scroll-view';
 import { headerConfig, RowHeader, ColHeader, AllSelectHeader } from './header';
+import Row from './row';
 import { defaultTable } from '@/cool-table-canvas/constant/mock';
 import { Box, CanvasBox, boxHeight, boxWidth } from './style';
 
@@ -12,7 +13,7 @@ const Container = () => {
     const [table, setTable] = useState<ITable>(defaultTable);
     const [offset, setOffset] = useState<IOffset>({ x: 0, y: 0 });
     const { header, rows } = table;
-    
+
     const handleScroll = useCallback((offset: Partial<IOffset>) => {
         setOffset((pre) => ({
             ...pre,
@@ -21,15 +22,33 @@ const Container = () => {
     }, []);
 
     const heights = useMemo(() => {
-        return rows.map(row => {
+        return rows.map((row) => {
             const firstCell = row.cells[0];
             return firstCell.height;
-        })
+        });
     }, [rows]);
 
     const widths = useMemo(() => {
-        return rows[0].cells.map(cell => cell.width);
+        return rows[0].cells.map((cell) => cell.width);
     }, [rows]);
+
+    const renderTable = useCallback(
+        (renderAttrRows: IRenderAttrRow[]) => {
+            return renderAttrRows.map((renderAttrRow: IRenderAttrRow, visibleRowIdx: number) => {
+                const { rowIndex: dataRowIdx } = renderAttrRow;
+                const row = rows[dataRowIdx];
+                return (
+                    <Row
+                        key={`row-${dataRowIdx}`}
+                        renderAttrRow={renderAttrRow}
+                        row={row}
+                        visibleRowIdx={visibleRowIdx}
+                    />
+                );
+            });
+        },
+        [rows],
+    );
 
     return (
         <Box>
@@ -63,23 +82,19 @@ const Container = () => {
             </CanvasBox>
             {/* 右下 表格主体 */}
             <CanvasBox left={rowHeaderWidth} top={colHeaderHeight}>
-                <Stage className="canvas-box right-bottom" width={boxWidth - rowHeaderWidth} height={boxHeight - colHeaderHeight}>
+                <Stage
+                    className="canvas-box right-bottom"
+                    width={boxWidth - rowHeaderWidth}
+                    height={boxHeight - colHeaderHeight}
+                >
                     <Layer>
-                        {/* <ScrollView
-                            width={boxWidth - rowHeaderWidth}
-                            height={boxHeight - colHeaderHeight}
-                            contentHeight={totalHeight}
-                            contentWidth={totalWidth}
-                            onScroll={handleScroll}
-                        >
-                            <Table rows={rows} />
-                        </ScrollView> */}
                         <ScrollView
                             viewWidth={boxWidth - rowHeaderWidth}
                             viewHeight={boxHeight - colHeaderHeight}
                             widths={widths}
                             heights={heights}
-                            // onScroll={handleScroll}
+                            render={renderTable}
+                            onScroll={handleScroll}
                         />
                     </Layer>
                 </Stage>

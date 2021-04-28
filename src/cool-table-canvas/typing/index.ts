@@ -4,6 +4,7 @@
 export interface ICell {
     width: number;
     height: number;
+    value: string;
 }
 
 export interface IRow {

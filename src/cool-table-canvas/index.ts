@@ -1,2 +1,2 @@
-import Table from './konva';
-export default Table;
+import TableCanvas from './konva/table';
+export default TableCanvas;

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, ReactNode } from 'react';
 import Konva from 'konva';
 import { Group, Rect, Text } from 'react-konva';
 import ScrollBar, { barConfig } from '../scroll-bar';
@@ -18,8 +18,16 @@ interface ILocation {
     y: number;
 }
 
-interface IItem extends ISize, ILocation {
-    text: string;
+export interface IRenderAttr {
+    xIndex: number;
+    yIndex: number;
+    size: ISize;
+    location: ILocation;
+};
+
+export interface IRenderAttrRow {
+    rowIndex: number;
+    renderAttrs: IRenderAttr[];
 }
 
 interface IScrollViewProps {
@@ -31,12 +39,14 @@ interface IScrollViewProps {
     widths: number[];
     heights: number[];
     onScroll?: (offset: Partial<IOffset>) => void;
+
+    render: (rows: IRenderAttrRow[]) => ReactNode;
 }
 
 const { size, padding } = barConfig;
 
 const ScrollView: React.FC<IScrollViewProps> = (props) => {
-    const { viewWidth, viewHeight, onScroll, widths, heights } = props;
+    const { viewWidth, viewHeight, onScroll, widths, heights, render } = props;
 
     const { locations: tops, handleScroll: handleYScroll, firstIndex: yFirst, lastIndex: yLast, offset: y } = useScroll(
         {
@@ -75,22 +85,30 @@ const ScrollView: React.FC<IScrollViewProps> = (props) => {
         [onScroll, handleYScroll, handleXScroll],
     );
 
-    const visibleRows: IItem[][] = useMemo(() => {
-        const rows: IItem[][] = [];
+    const visible: IRenderAttrRow[] = useMemo(() => {
+        const rows: IRenderAttrRow[] = [];
+
         for (let i = yFirst; i <= yLast; i++) {
-            const currentRow: IItem[] = [];
+            const currentRow: IRenderAttrRow = {
+                rowIndex: i,
+                renderAttrs: [],
+            };
 
             for (let j = xFirst; j <= xLast; j++) {
-                currentRow.push({
-                    width: widths[j],
-                    height: heights[i],
-                    x: lefts[j] + x,
-                    y: tops[i] + y,
-                    text: `${i + 1}-${j + 1}`,
+                currentRow.renderAttrs.push({
+                    xIndex: j,
+                    yIndex: i,
+                    location: {
+                        x: lefts[j] + x,
+                        y: tops[i] + y,
+                    },
+                    size: {
+                        width: widths[j],
+                        height: heights[i],
+                    }
                 });
             }
             rows.push(currentRow);
-            console.log('rows: ', rows[0]);
         }
         return rows;
     }, [yFirst, yLast, xFirst, xLast, tops, x, y, widths, heights, lefts]);
@@ -98,29 +116,7 @@ const ScrollView: React.FC<IScrollViewProps> = (props) => {
     return (
         <>
             <Group onWheel={handleWheel}>
-                {visibleRows.map((row) => {
-                    return row.map(cell => (
-                        <React.Fragment key={`test-${cell.text}`}>
-                            <Rect
-                                x={cell.x}
-                                y={cell.y}
-                                width={cell.width}
-                                height={cell.height}
-                                stroke="#cdcdcd"
-                                strokeWidth={1}
-                            />
-                            <Text
-                                x={cell.x}
-                                y={cell.y}
-                                width={cell.width}
-                                height={cell.height}
-                                fill="rgba(0, 0, 0, 0.88)"
-                                align="center"
-                                verticalAlign="middle"
-                            />
-                        </React.Fragment>
-                    ))
-                })}
+                {render(visible)}
             </Group>
             <Group x={0} y={viewHeight - padding - size}>
                 {/* x 滚动轴 */}

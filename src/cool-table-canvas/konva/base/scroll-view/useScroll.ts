@@ -21,6 +21,7 @@ function useScroll(props: IScrollProps) {
     const [offset, setOffset] = useState<number>(0);
 
     // 根据渲染 size 项算出每项位置边界，开头默认 0
+    // location.length = sizes.length + 1
     // 如：[0, 10, 20]
     const locations = useMemo(() => {
         const result = [0];
@@ -52,16 +53,12 @@ function useScroll(props: IScrollProps) {
     const [firstIndex, lastIndex] = useMemo(() => {
         const positiveOffset = Math.abs(offset);
         
-        // 视窗中开始项的下标
+        // 视窗中开始项、结束项的下标
         const firstIndex = getTargetIdx(locations, positiveOffset) - 1;
+        const lastIndex = Math.min(getTargetIdx(locations, positiveOffset + viewSize), sizes.length -1);
 
-        let lastIndex = getTargetIdx(locations, positiveOffset + viewSize);
-        // 视窗中结束项的下标
-        if (lastIndex >= locations.length) {
-            lastIndex = locations.length - 1;
-        }
         return [firstIndex, lastIndex];
-    }, [offset, locations, viewSize]);
+    }, [offset, locations, viewSize, sizes]);
 
     return {
         offset,
