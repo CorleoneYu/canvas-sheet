@@ -1,34 +1,11 @@
 import React, { useCallback, useMemo, ReactNode } from 'react';
 import Konva from 'konva';
-import { Group, Rect, Text } from 'react-konva';
+import { Group } from 'react-konva';
 import ScrollBar, { barConfig } from '../scroll-bar';
-import useScroll from './useScroll';
-export interface IOffset {
-    x: number;
-    y: number;
-}
+import { IRenderAttrRow, IOffset } from './interface';
+import useScroll from './hooks/useScroll';
 
-interface ISize {
-    width: number;
-    height: number;
-}
-
-interface ILocation {
-    x: number;
-    y: number;
-}
-
-export interface IRenderAttr {
-    xIndex: number;
-    yIndex: number;
-    size: ISize;
-    location: ILocation;
-};
-
-export interface IRenderAttrRow {
-    rowIndex: number;
-    renderAttrs: IRenderAttr[];
-}
+const { size, padding } = barConfig;
 
 interface IScrollViewProps {
     // 视窗宽高
@@ -38,13 +15,15 @@ interface IScrollViewProps {
     // 内容宽高
     widths: number[];
     heights: number[];
-    onScroll?: (offset: Partial<IOffset>) => void;
 
+    // 显示内容
     render: (rows: IRenderAttrRow[]) => ReactNode;
+
+    // 滚动时的回调
+    onScroll?: (offset: Partial<IOffset>) => void;
 }
 
-const { size, padding } = barConfig;
-
+// TODO: 支持单向滚动
 const ScrollView: React.FC<IScrollViewProps> = (props) => {
     const { viewWidth, viewHeight, onScroll, widths, heights, render } = props;
 
@@ -55,12 +34,16 @@ const ScrollView: React.FC<IScrollViewProps> = (props) => {
         },
     );
 
-    const { locations: lefts, handleScroll: handleXScroll, firstIndex: xFirst, lastIndex: xLast, offset: x } = useScroll(
-        {
-            sizes: widths,
-            viewSize: viewWidth,
-        },
-    );
+    const {
+        locations: lefts,
+        handleScroll: handleXScroll,
+        firstIndex: xFirst,
+        lastIndex: xLast,
+        offset: x,
+    } = useScroll({
+        sizes: widths,
+        viewSize: viewWidth,
+    });
 
     const contentHeight = useMemo(() => tops[tops.length - 1], [tops]);
     const contentWidth = useMemo(() => lefts[lefts.length - 1], [lefts]);
@@ -105,7 +88,7 @@ const ScrollView: React.FC<IScrollViewProps> = (props) => {
                     size: {
                         width: widths[j],
                         height: heights[i],
-                    }
+                    },
                 });
             }
             rows.push(currentRow);
@@ -115,9 +98,7 @@ const ScrollView: React.FC<IScrollViewProps> = (props) => {
 
     return (
         <>
-            <Group onWheel={handleWheel}>
-                {render(visible)}
-            </Group>
+            <Group onWheel={handleWheel}>{render(visible)}</Group>
             <Group x={0} y={viewHeight - padding - size}>
                 {/* x 滚动轴 */}
                 <ScrollBar direction="x" offset={x} viewSize={viewWidth} totalSize={contentWidth} />
