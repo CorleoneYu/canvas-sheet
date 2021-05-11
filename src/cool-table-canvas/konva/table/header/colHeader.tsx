@@ -2,9 +2,9 @@ import React, { useMemo, useCallback } from 'react';
 import { IColHeader } from '@/cool-table-canvas/typing';
 import { Stage, Layer, Group, Text, Rect } from 'react-konva';
 import { ControlScrollView, IRenderAttrRow, IRenderAttr } from '@/cool-table-canvas/konva/base/scroll-view';
-import { defaultConfig } from '@/cool-table-canvas/constant';
+import { tableConfig } from '@/cool-table-canvas/constant';
 
-const { background, border } = defaultConfig.style.header;
+const { background, border } = tableConfig.style.header;
 
 interface IColHeaderProps {
     colHeaders: IColHeader[];

@@ -1,14 +1,15 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Stage, Layer } from 'react-konva';
 import { ITable } from '@/cool-table-canvas/typing';
+import { tableConfig } from '@/cool-table-canvas/constant';
 import ScrollView, { IOffset, IRenderAttrRow } from '../base/scroll-view';
 import { AllSelectHeader, RowHeader, ColHeader } from './header';
 import Row from './row';
 import { defaultTable } from '@/cool-table-canvas/constant/mock';
-import { Box, CanvasBox, boxHeight, boxWidth } from './style';
+import { Box, CanvasBox } from './style';
 
-const colHeaderHeight = 24;
-const rowHeaderWidth = 50;
+const { tableHeight, tableWidth, header } = tableConfig.style;
+const { colHeaderHeight, rowHeaderWidth } = header;
 
 const Container = () => {
     const [table, setTable] = useState<ITable>(defaultTable);
@@ -61,7 +62,7 @@ const Container = () => {
             <CanvasBox left={0} top={colHeaderHeight}>
                 <RowHeader 
                     rowHeaders={header.rowHeaders}
-                    rowHeaderViewHeight={boxHeight - colHeaderHeight}
+                    rowHeaderViewHeight={tableHeight - colHeaderHeight}
                     rowHeaderWidth={rowHeaderWidth}
                     offsetY={offset.y}
                 />
@@ -70,7 +71,7 @@ const Container = () => {
             <CanvasBox left={rowHeaderWidth} top={0}>
                 <ColHeader
                     colHeaders={header.colHeaders}
-                    colHeaderViewWidth={boxWidth - rowHeaderWidth}
+                    colHeaderViewWidth={tableWidth - rowHeaderWidth}
                     colHeaderHeight={colHeaderHeight}
                     offsetX={offset.x}
                 />
@@ -79,13 +80,13 @@ const Container = () => {
             <CanvasBox left={rowHeaderWidth} top={colHeaderHeight}>
                 <Stage
                     className="canvas-box right-bottom"
-                    width={boxWidth - rowHeaderWidth}
-                    height={boxHeight - colHeaderHeight}
+                    width={tableWidth - rowHeaderWidth}
+                    height={tableHeight - colHeaderHeight}
                 >
                     <Layer>
                         <ScrollView
-                            viewWidth={boxWidth - rowHeaderWidth}
-                            viewHeight={boxHeight - colHeaderHeight}
+                            viewWidth={tableWidth - rowHeaderWidth}
+                            viewHeight={tableHeight - colHeaderHeight}
                             widths={widths}
                             heights={heights}
                             render={renderRows}

@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-export const boxHeight = 700;
-export const boxWidth = 800;
+import { tableConfig } from '@/cool-table-canvas/constant';
+
+const { tableHeight, tableWidth } = tableConfig.style;
 
 export const Box = styled.div`
     position: relative;
     border: 1px solid black;
-    width: ${boxWidth}px;
-    height: ${boxHeight}px;
+    width: ${tableWidth}px;
+    height: ${tableHeight}px;
 `;
 
 interface ICanvasProps {

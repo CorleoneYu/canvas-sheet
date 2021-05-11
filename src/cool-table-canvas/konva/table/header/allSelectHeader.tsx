@@ -1,8 +1,8 @@
 import React from 'react';
 import { Rect, Stage, Layer } from 'react-konva';
-import { defaultConfig } from '@/cool-table-canvas/constant';
+import { tableConfig } from '@/cool-table-canvas/constant';
 
-const { background, border } = defaultConfig.style.header;
+const { background, border } = tableConfig.style.header;
 
 interface IAllSelectHeaderProps {
     width: number;
